@@ -23,6 +23,17 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ ok: false }, 403);
   }
 
+  const logsEnabled = String(env.TELEGRAM_LOGS_ENABLED || "")
+    .trim()
+    .toLowerCase() === "true";
+
+  if (!logsEnabled) {
+    return new Response(null, {
+      status: 204,
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
+
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
     return jsonResponse({ ok: false, error: "Notifications are not configured" }, 503);
   }

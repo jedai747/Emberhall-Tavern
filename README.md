@@ -20,10 +20,17 @@ The included image and all styles are local, so the page has no external runtime
 
 ## Telegram visit notifications
 
-The Pages Function at `functions/api/visit.js` sends one notification per browser every 24 hours.
+The Pages Function at `functions/api/visit.js` sends a notification on every page entry.
 Configure these encrypted secrets in the Cloudflare Pages project before deploying:
 
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
+
+Also configure the plain-text environment variable `TELEGRAM_LOGS_ENABLED`:
+
+- `True` enables notifications.
+- `False` disables notifications.
+
+The value is case-insensitive. Redeploy the Pages project after changing it so the new binding takes effect.
 
 Never commit their values to this repository.
