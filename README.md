@@ -1,6 +1,6 @@
-# Greg$Ruby link page
+# Greg&Ruby link page
 
-A lightweight, responsive link page for Greg$Ruby.
+A lightweight, responsive link page for Greg&Ruby.
 
 ## Preview locally
 

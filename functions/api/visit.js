@@ -65,7 +65,7 @@ export async function onRequestPost({ request, env }) {
   const timestamp = new Date().toISOString().replace("T", " ").replace(".000Z", " UTC");
 
   const message = [
-    type === "click" ? `🔗 Greg$Ruby link clicked: ${service}` : "🔥 New visitor at Greg$Ruby",
+    type === "click" ? `🔗 Greg&Ruby link clicked: ${service}` : "🔥 New visitor at Greg&Ruby",
     "",
     `Time: ${timestamp}`,
     `Country: ${country}`,
