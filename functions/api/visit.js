@@ -1,3 +1,10 @@
+const services = new Map([
+  ["youtube", "YouTube"],
+  ["spotify", "Spotify"],
+  ["youtube-music", "YouTube Music"],
+  ["apple-music", "Apple Music"],
+]);
+
 const jsonResponse = (body, status = 200) =>
   Response.json(body, {
     status,
@@ -38,21 +45,27 @@ export async function onRequestPost({ request, env }) {
     return jsonResponse({ ok: false, error: "Notifications are not configured" }, 503);
   }
 
-  let visit = {};
+  let event = {};
 
   try {
-    visit = await request.json();
+    event = (await request.json()) ?? {};
   } catch {
     // Missing optional visit metadata does not prevent a notification.
   }
 
+  const type = event.event ?? "visit";
+  const service = services.get(event.service);
+  if (type !== "visit" && (type !== "click" || !service)) {
+    return jsonResponse({ ok: false, error: "Unknown notification event" }, 400);
+  }
+
   const country = cleanText(request.cf?.country, "Unknown");
-  const path = cleanText(visit.path, "/");
-  const referrer = cleanText(visit.referrer, "Direct visit");
+  const path = cleanText(event.path, "/");
+  const referrer = cleanText(event.referrer, "Direct visit");
   const timestamp = new Date().toISOString().replace("T", " ").replace(".000Z", " UTC");
 
   const message = [
-    "🔥 New guest at Emberhall Tavern",
+    type === "click" ? `🔗 Greyken Ruby link clicked: ${service}` : "🔥 New visitor at Greyken Ruby",
     "",
     `Time: ${timestamp}`,
     `Country: ${country}`,
