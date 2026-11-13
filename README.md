@@ -1,6 +1,6 @@
-# Greyken Ruby link page
+# Greg$Ruby link page
 
-A lightweight, responsive link page for Greyken Ruby.
+A lightweight, responsive link page for Greg$Ruby.
 
 ## Preview locally
 
